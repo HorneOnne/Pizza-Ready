@@ -1,44 +1,94 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class MachineSlot : MonoBehaviour
 {
     [field: SerializeField] public int Cost { get; set; }
-    [SerializeField] private bool _isUnlock;
+    private int _startingCost;
+    [SerializeField] private bool _isUnlocking = false;
+    private float _waitToUnlockTime = 0.5f;
+    [SerializeField] private float _waitToUnlockTimer = 0.0f;
+   
 
     // references
-    [SerializeField] private TextMeshProUGUI _costText;
+    [SerializeField] private TextMeshProUGUI _defaultCostText;
+    [SerializeField] private TextMeshProUGUI _unlockingCostText;
+    [SerializeField] private GameObject _default;
+    [SerializeField] private GameObject _unlocking;
+    [SerializeField] private Image _percentSliderImage;
     [SerializeField] private string _machineName;
 
     private void Awake()
     {
-        
+        _startingCost = Cost;
     }
 
     private void Start()
     {
-        _costText.text = Cost.ToString();
+        UpdateCostString();
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
-        Debug.Log(transform.position);
+     
+        if(other.CompareTag("Player"))
+        {
+            
+
+            _isUnlocking = true;
+            transform.DOScale(1.35f, 0.5f).SetEase(Ease.InFlash);
+        }
+
+     
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+  
+        if (other.CompareTag("Player"))
+        {
+            transform.DOScale(1.0f, 0.5f).SetEase(Ease.OutBounce);
+            _isUnlocking = false;
+            _waitToUnlockTimer = 0;
+        }
+
+      
     }
 
 
     private void OnTriggerStay(Collider other)
-    {    
-        if(Unlock())
+    {
+        if(_isUnlocking)
+        {
+            _waitToUnlockTimer += Time.deltaTime;
+            if(_waitToUnlockTimer < _waitToUnlockTime)
+            {
+                return;
+            }
+            else
+            {
+                if (_startingCost != Cost)
+                {
+                    _default.SetActive(false);
+                    _unlocking.SetActive(true);
+                }
+            }
+        }
+
+   
+        if (Unlock())
         {
             var machinePrefab = Resources.Load($"Machines/{_machineName}");
-            if(machinePrefab != null )
+            if (machinePrefab != null)
             {
                 // create machine
-                Instantiate(machinePrefab, transform.position, Quaternion.identity);
+                Instantiate(machinePrefab, new Vector3(other.transform.position.x, 0, other.transform.position.z + 1.5f), Quaternion.identity);
+                this.gameObject.SetActive(false);
             }
             else
             {
@@ -49,7 +99,45 @@ public class MachineSlot : MonoBehaviour
 
     public bool Unlock()
     {
-        return false;
+        if (CurrencyManager.Instance.Money > 0)
+        {
+            CurrencyManager.Instance.Withdraw(1);
+            Cost--;
+            UpdateCostString();
+            _percentSliderImage.fillAmount = 1 - (float)Cost / _startingCost;
+        }
+ 
+
+        if (Cost == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
+    private void UpdateCostString()
+    {
+        _defaultCostText.text = CurrencyManager.Instance.GetCurrencyString(Cost);
+        _unlockingCostText.text = CurrencyManager.Instance.GetCurrencyString(_startingCost - Cost);
+
+    }
+
+    private void SetUnlockState()
+    {
+        // first time unlock
+        if (_startingCost == Cost)
+        {
+            _default.SetActive(false);
+            _unlocking.SetActive(true);
+        }
+        else
+        {
+            _default.SetActive(true);
+            _unlocking.SetActive(false);
+        }    
+    }
 }
+

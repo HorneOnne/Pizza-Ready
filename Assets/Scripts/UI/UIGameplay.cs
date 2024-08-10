@@ -10,8 +10,14 @@ public class UIGameplay : CustomCanvas
     private void Start()
     {
         UpdateMoneyText();
+        CurrencyManager.OnBalanceChanged += UpdateMoneyText;
     }
-    
+
+    private void OnDestroy()
+    {
+        CurrencyManager.OnBalanceChanged -= UpdateMoneyText;
+    }
+
 
     private void UpdateMoneyText()
     {

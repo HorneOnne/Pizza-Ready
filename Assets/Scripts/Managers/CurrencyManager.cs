@@ -33,7 +33,60 @@ public class CurrencyManager : MonoBehaviour
         OnBalanceChanged?.Invoke();
     }
 
- 
+
+    public string GetCurrencyString(BigInteger value)
+    {
+        BigInteger divisor;
+        string suffix;
+
+        if (value >= new BigInteger(1000000000000000000))
+        {
+            divisor = new BigInteger(1000000000000000000);
+            suffix = "ab";
+        }
+        else if (value >= new BigInteger(1000000000000000))
+        {
+            divisor = new BigInteger(1000000000000000);
+            suffix = "aa";
+        }
+        else if (value >= new BigInteger(1000000000000))
+        {
+            divisor = new BigInteger(1000000000000);
+            suffix = "T";
+        }
+        else if (value >= 1000000000)
+        {
+            divisor = new BigInteger(1000000000);
+            suffix = "B";
+        }
+        else if (value >= 1000000)
+        {
+            divisor = new BigInteger(1000000);
+            suffix = "M";
+        }
+        else if (value >= 1000)
+        {
+            divisor = new BigInteger(1000);
+            suffix = "K";
+        }
+        else
+        {
+            return value.ToString();
+        }
+
+        BigInteger wholePart = value / divisor;
+        BigInteger fractionalPart = (value % divisor) * 10 / divisor;
+        string formattedString = $"{wholePart},{fractionalPart}";
+
+        // If the fractional part is zero, remove it
+        if (fractionalPart == 0)
+        {
+            formattedString = wholePart.ToString();
+        }
+
+        return formattedString + suffix;
+    }
+
     public string GetCurrencyString()
     {
         BigInteger divisor;
