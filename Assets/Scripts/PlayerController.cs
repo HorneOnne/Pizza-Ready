@@ -10,9 +10,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _moveSpeed;
     [SerializeField] private Vector3 _moveDirection;
-    private Vector3 _cameraIsometricRot = new Vector3(0, 45, 0);
-
-    public Vector3 CurrentVel;
 
     // Animation
     private bool _hasAnimator;
@@ -44,38 +41,10 @@ public class PlayerController : MonoBehaviour
 
 
 
-    // Rotation angle (positive for right, negative for left)
-    public float rotationAngle = 45f;
-
-    Vector3 RotateVectorAroundY(Vector3 vector, float angle)
-    {
-        // Create a quaternion for rotation around Y-axis
-        Quaternion rotationQuaternion = Quaternion.Euler(0f, angle * UnityEngine.Time.deltaTime, 0f);
-
-        // Rotate the vector using the quaternion
-        Vector3 rotatedVector = rotationQuaternion * vector;
-
-        return rotatedVector;
-    }
-
-    private BoxCollider2D _box2D;
+  
     private void Update()
     {
-        CurrentVel = _rb.velocity;
-
-
-        //if (Simulate)
-        //{
-        //    _entity.Simulate = Simulate;
-        //}
-
-
-
-   
         UpdateRotation(ToGameDirection(new Vector3(_input.Move.x, 0, _input.Move.y)));
-
-
-
 
 
         // Animation
@@ -126,10 +95,7 @@ public class PlayerController : MonoBehaviour
     {
         if (direction.sqrMagnitude >= 0.1f)
         {
-            // Calculate the rotation to look towards the move direction
             Quaternion lookRotation = Quaternion.LookRotation(direction, Vector3.up);
-
-            // Apply the rotation to the character
             _model.rotation = Quaternion.Slerp(_model.rotation, lookRotation, UnityEngine.Time.deltaTime * 10f);
         }
     }
