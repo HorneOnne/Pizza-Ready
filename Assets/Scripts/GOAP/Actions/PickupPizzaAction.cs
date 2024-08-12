@@ -2,6 +2,7 @@
 using CrashKonijn.Goap.Interfaces;
 using CrashKonijn.Goap.Enums;
 using CrashKonijn.Goap.Classes;
+using UnityEngine;
 
 public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 {
@@ -18,6 +19,7 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 
     public override ActionRunState Perform(IMonoAgent agent, Data data, ActionContext context)
     {
+        Debug.Log("PickupPizzaAction");
         if (data.Target is not TransformTarget transformTarget)
             return ActionRunState.Stop;
 

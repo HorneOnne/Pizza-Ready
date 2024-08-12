@@ -173,6 +173,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandHoldTransform: {fileID: 272670337}
+--- !u!114 &84525116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84525095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63e0caf43f07aa340b48cc48a4a65e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Table: {fileID: 0}
 --- !u!1 &100802550
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bef271c431055f4d915e5f50ba183e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pizzas: []
 --- !u!1 &250699013
 GameObject:
   m_ObjectHideFlags: 3
@@ -4147,6 +4161,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5505270429271468499, guid: 98901190d2b27884d91f41da9d581281,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 84525116}
     - targetCorrespondingSourceObject: {fileID: 5505270429271468499, guid: 98901190d2b27884d91f41da9d581281,
         type: 3}
       insertIndex: -1

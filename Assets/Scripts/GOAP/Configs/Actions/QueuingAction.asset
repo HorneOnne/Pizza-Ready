@@ -18,10 +18,7 @@ MonoBehaviour:
   <BaseCost>k__BackingField: 1
   <InRange>k__BackingField: 0.1
   <MoveMode>k__BackingField: 0
-  conditions:
-  - worldKey: {fileID: 11400000, guid: b91b0f80292a7da4ab8999e300909012, type: 2}
-    <Comparison>k__BackingField: 0
-    <Amount>k__BackingField: 1
+  conditions: []
   effects:
   - worldKey: {fileID: 11400000, guid: 3473d19976e85324f8e639459424bbdc, type: 2}
     <Increase>k__BackingField: 1

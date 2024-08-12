@@ -14,6 +14,8 @@ public class ClosestTableSensor : LocalTargetSensorBase
 
     public override ITarget Sense(IMonoAgent agent, IComponentReference references)
     {
+        //Debug.Log("Sense closest table.");
+        //return new PositionTarget(new Vector3(30, 0, 0));
         return new TransformTarget(_tables[0].transform);
     }
 

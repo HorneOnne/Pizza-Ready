@@ -2,6 +2,7 @@
 using CrashKonijn.Goap.Interfaces;
 using CrashKonijn.Goap.Enums;
 using CrashKonijn.Goap.Classes;
+using UnityEngine;
 
 public class FindTableAction : ActionBase<FindTableAction.Data>
 {
@@ -16,6 +17,7 @@ public class FindTableAction : ActionBase<FindTableAction.Data>
             return;
 
         data.Table = transformTarget.Transform.GetComponent<TableBehaviour>();
+        UnityEngine.Debug.Log(data.Table.gameObject.transform.position);
     }
 
 
@@ -25,7 +27,14 @@ public class FindTableAction : ActionBase<FindTableAction.Data>
             return ActionRunState.Stop;
 
         if(data.Table.HasSeat())
+        {
+            var seat = agent.GetComponent<SeatBehaviour>();
+            if (seat == null)
+                return ActionRunState.Stop;
+
+            seat.Sitdown(data.Table);
             return ActionRunState.Stop;
+        }          
         else
             return ActionRunState.Continue;
     }

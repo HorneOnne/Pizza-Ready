@@ -1,27 +1,27 @@
 ﻿using CrashKonijn.Goap.Sensors;
 using CrashKonijn.Goap.Classes;
 using UnityEngine;
+using CrashKonijn.Goap.Interfaces;
 
-public class HasTableSensor : GlobalWorldSensorBase
+public class HasTableSensor : LocalWorldSensorBase
 {
-    private TableBehaviour[] _tableBehaviours;
-
     public override void Created()
     {
-        _tableBehaviours = GameObject.FindObjectsOfType<TableBehaviour>();
+       
     }
 
-    public override SenseValue Sense()
+    public override SenseValue Sense(IMonoAgent agent, IComponentReference references)
     {
-        if(_tableBehaviours.Length > 0 )
-        {
-            Debug.Log("Has table");
-        }
-        else
-        {
-            Debug.Log("Doesn't has table");
-        }
+        var seat = references.GetCachedComponent<SeatBehaviour>();
+        if (seat == null)
+            return false;
 
-        return _tableBehaviours.Length > 0;
+        Debug.Log($"Has table sensor: {seat.Table != null}");
+        return seat.Table != null;
+    }
+
+    public override void Update()
+    {
+       
     }
 }

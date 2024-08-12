@@ -32,7 +32,6 @@ public class AgentMoveBehaviour : MonoBehaviour
     {
         if (!this._shouldMove) return;
         if (_currentTarget == null) return;
-
         this.transform.position = Vector3.MoveTowards(this.transform.position, _currentTarget.Position, MoveSpeed * Time.deltaTime);
     }
 
@@ -43,6 +42,7 @@ public class AgentMoveBehaviour : MonoBehaviour
 
     private void OnTargetChanged(ITarget target, bool inRange)
     {
+        Debug.Log($"Target change: {target.Position}");
         this._currentTarget = target;
         this._shouldMove = !inRange;
     }

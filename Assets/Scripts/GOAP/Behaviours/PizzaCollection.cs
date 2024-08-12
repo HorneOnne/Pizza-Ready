@@ -6,7 +6,7 @@ using System.Linq;
 
 public class PizzaCollection : MonoBehaviour
 {
-    private readonly List<PizzaBehaviour> _pizzas = new();
+    [SerializeField] private List<PizzaBehaviour> _pizzas = new();
 
     public void Add(PizzaBehaviour pizza)
     {
@@ -27,4 +27,6 @@ public class PizzaCollection : MonoBehaviour
     {
         return this._pizzas.Any();  
     }
+
+
 }

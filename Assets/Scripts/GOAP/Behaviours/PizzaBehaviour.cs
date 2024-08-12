@@ -5,10 +5,12 @@ public class PizzaBehaviour : MonoBehaviour
 {
     public bool IsPickUp { get; private set; }
     private PizzaCollection _pizzaCollection;
+    public float NutritionValue { get; set; }
 
     private void Awake()
     {
         _pizzaCollection = FindAnyObjectByType<PizzaCollection>();
+        NutritionValue = 100;
     }
 
     private void OnEnable()

@@ -19,15 +19,20 @@ public class AgentBrain : MonoBehaviour
 
     private void Update()
     {
-        if(this._hunger.Hunger > 80)
+        if(this._hunger.Hunger > 50)
         {
             this._agent.SetGoal<FixHungerGoal>(false);
             return;
         }
 
-        if (this._hunger.Hunger < 20)
-        {
-            this._agent.SetGoal<WanderGoal>(true);
-        }
+        //if (this._hunger.Hunger < -100)
+        //{
+        //    this._agent.SetGoal<WanderGoal>(true);
+        //}
+    }
+
+    public void ActiveWanderGoal()
+    {
+        this._agent.SetGoal<WanderGoal>(true);
     }
 }

@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: DefaultSet
   m_EditorClassIdentifier: 
   actions:
+  - {fileID: 11400000, guid: 92935b72c88b7d74283d85a1d4207b3b, type: 2}
+  - {fileID: 11400000, guid: 2c0f3b564d9c23b4cbdf26e53d30109a, type: 2}
   - {fileID: 11400000, guid: 98591a85aae45f749bf75308dc9618ea, type: 2}
   - {fileID: 11400000, guid: 49858ce23bd5c7b41b615fd1229c7b41, type: 2}
-  - {fileID: 11400000, guid: 2c0f3b564d9c23b4cbdf26e53d30109a, type: 2}
-  - {fileID: 11400000, guid: 2ad79c904985cd5488c1b81ff1e35c6a, type: 2}
-  - {fileID: 11400000, guid: 92935b72c88b7d74283d85a1d4207b3b, type: 2}
   goals:
   - {fileID: 11400000, guid: 262743a18e477bb4bbefae23533b72d0, type: 2}
   - {fileID: 11400000, guid: 41e8c91f1c1366649960b2a6c4312762, type: 2}

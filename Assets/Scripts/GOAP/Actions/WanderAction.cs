@@ -20,6 +20,7 @@ public class WanderAction : ActionBase<WanderAction.Data>
 
     public override ActionRunState Perform(IMonoAgent agent, Data data, ActionContext context)
     {
+        Debug.Log("WanderAction");
         data.Timer -= context.DeltaTime;
 
         if (data.Timer > 0)
