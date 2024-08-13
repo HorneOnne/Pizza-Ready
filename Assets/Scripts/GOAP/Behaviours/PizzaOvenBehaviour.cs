@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 public class PizzaOvenBehaviour : MonoBehaviour
 {
-    private int _maxStack = 10;
-    private int _currentStack;
+    private int _maxStack = 3;
+
 
     [SerializeField] private Transform _bakedPizzaOriginTransform;
     private Vector3 _bakedPizzaOffset = new Vector3(0,0.1f,0f);
     [SerializeField]  private PizzaBehaviour _pizzaPrefab;
-    public List<PizzaBehaviour> BakedPizzas = new();
+    public Stack<PizzaBehaviour> BakedPizzas = new();
 
 
     private float _bakePizzaTime = 2.0f;
@@ -21,7 +21,7 @@ public class PizzaOvenBehaviour : MonoBehaviour
         if(_bakePizzaTimer > _bakePizzaTime)
         {
             _bakePizzaTimer -= _bakePizzaTime;
-            if (_currentStack < _maxStack)
+            if (BakedPizzas.Count < _maxStack)
             {
                 Debug.Log("Bake pizza");
                 BakePizza();
@@ -35,9 +35,8 @@ public class PizzaOvenBehaviour : MonoBehaviour
 
     public PizzaBehaviour BakePizza()
     {
-        var pizzaInstance = Instantiate(_pizzaPrefab, GetBakedPizzaPosition(_currentStack), Quaternion.identity);
-        BakedPizzas.Add(pizzaInstance);
-        _currentStack++;
+        var pizzaInstance = Instantiate(_pizzaPrefab, GetBakedPizzaPosition(BakedPizzas.Count), Quaternion.identity);
+        BakedPizzas.Push(pizzaInstance);
 
         return pizzaInstance;
     }
@@ -50,5 +49,20 @@ public class PizzaOvenBehaviour : MonoBehaviour
             position += _bakedPizzaOffset;
         }
         return position;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            if(other.TryGetComponent<PlayerServePizzaController>(out var player))
+            {
+                if(BakedPizzas.Count > 0)
+                {
+                    player.Get(BakedPizzas.Pop());
+                }
+            
+            }
+        }
     }
 }

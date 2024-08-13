@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-
 public class PlayerController : MonoBehaviour
 {
     private InputHandler _input;
