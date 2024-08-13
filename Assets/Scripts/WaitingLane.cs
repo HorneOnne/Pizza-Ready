@@ -25,7 +25,6 @@ public class WaitingLane : MonoBehaviour
                 agent.IsWaitingInQueue = true;
                 agent.QueueIndex = i;
                 agent.GetComponent<AgentMoveBehaviour>().MoveTo(WaitingPoints[i].position);
-                Debug.Log($"Join: {i}");
                 return;
             }
         }
@@ -34,7 +33,6 @@ public class WaitingLane : MonoBehaviour
 
     public void Out(AgentQueuingBehaviour agent)
     {
-        Debug.Log("Out");
         if (agent.IsWaitingInQueue == false) return;
         int index = System.Array.IndexOf(_customerQueue, agent);
 

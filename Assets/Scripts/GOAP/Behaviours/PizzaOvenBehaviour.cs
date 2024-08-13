@@ -59,7 +59,7 @@ public class PizzaOvenBehaviour : MonoBehaviour
             {
                 if(BakedPizzas.Count > 0)
                 {
-                    player.Get(BakedPizzas.Pop());
+                    player.TakeFromOven(BakedPizzas.Pop());
                 }
             
             }

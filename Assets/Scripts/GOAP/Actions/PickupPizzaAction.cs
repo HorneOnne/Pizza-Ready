@@ -42,6 +42,8 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 
 
         var servingCounter = transformTarget.Transform.GetComponentInParent<CounterBehaviour>();
+        //if (!servingCounter.IsServing)
+        //    return ActionRunState.Stop;
         var pizza = servingCounter.ServePizza();
         if (pizza == null)
             return ActionRunState.Stop;

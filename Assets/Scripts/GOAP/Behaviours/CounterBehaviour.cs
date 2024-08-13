@@ -7,13 +7,15 @@ public class CounterBehaviour : MonoBehaviour
     [SerializeField] private Transform _seringPizzaOriginTransform;
     private Vector3 _servingPizzaOffset = new Vector3(0, 0.1f, 0f);
     public Transform GetPizzaTransform;
-
     public Vector3 TakePizzaPosition { get => GetPizzaTransform.position; }
 
+    public bool IsServing = false;
 
-    public void AddPizza(PizzaBehaviour pizza)
+    public void RefillPizza(PizzaBehaviour pizza)
     {
+        if (pizza == null) return;
         ServingPizzas.Add(pizza);
+        pizza.transform.SetParent(this.transform);
         pizza.transform.position = GetServingPizzaPosition();
     }
 
