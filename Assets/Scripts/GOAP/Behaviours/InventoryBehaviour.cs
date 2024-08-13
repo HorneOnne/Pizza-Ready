@@ -3,6 +3,12 @@
 public class InventoryBehaviour : MonoBehaviour
 {
     public PizzaBehaviour Pizza;
+    private PizzaCollection _pizzaCollection;
+    private void Awake()
+    {
+        _pizzaCollection = FindAnyObjectByType<PizzaCollection>();
+    }
+
 
     public void Put(PizzaBehaviour pizza)
     {
@@ -11,6 +17,8 @@ public class InventoryBehaviour : MonoBehaviour
 
         pizza.transform.SetParent(this.transform);
         pizza.transform.position = this.GetComponent<AgentController>().HandHoldTransform.position;
+
+        _pizzaCollection.Remove(pizza);
     }
 
     public PizzaBehaviour Get()
