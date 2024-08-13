@@ -7,9 +7,11 @@ using CrashKonijn.Goap.Interfaces;
 using System;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.AI;
 
 public class AgentMoveBehaviour : MonoBehaviour
 {
+    private NavMeshAgent _navmeshAgent;
     private AgentBehaviour _agent;
     private ITarget _currentTarget;
     private bool _shouldMove;
@@ -17,6 +19,7 @@ public class AgentMoveBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        this._navmeshAgent = GetComponent<NavMeshAgent>();
         this._agent = GetComponent<AgentBehaviour>();
     }
 
@@ -37,7 +40,7 @@ public class AgentMoveBehaviour : MonoBehaviour
     {
         if (!this._shouldMove) return;
         if (_currentTarget == null) return;
-        this.transform.position = Vector3.MoveTowards(this.transform.position, _currentTarget.Position, MoveSpeed * Time.deltaTime);
+        //this.transform.position = Vector3.MoveTowards(this.transform.position, _currentTarget.Position, MoveSpeed * Time.deltaTime);
     }
 
     private void OnTargetInRange(ITarget target)
@@ -49,6 +52,8 @@ public class AgentMoveBehaviour : MonoBehaviour
     {
         this._currentTarget = target;
         this._shouldMove = !inRange;
+
+        _navmeshAgent.SetDestination(_currentTarget.Position);
     }
 
     private void OnTargetOutOfRange(ITarget target)
@@ -68,8 +73,8 @@ public class AgentMoveBehaviour : MonoBehaviour
     public void MoveTo(Vector3 position)
     {
         _currentTarget = null;
-        //transform.DOMove(position, MoveSpeed * Time.deltaTime);
-        StartCoroutine(MoveToTargetCoroutine(position));
+        //StartCoroutine(MoveToTargetCoroutine(position));
+        _navmeshAgent.SetDestination(position);
     }
 
     private IEnumerator MoveToTargetCoroutine(Vector3 targetPosition)
