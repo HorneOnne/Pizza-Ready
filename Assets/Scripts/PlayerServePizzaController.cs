@@ -7,6 +7,8 @@ public class  PlayerServePizzaController : MonoBehaviour
     public Transform HoldPizzaTransform;
     private Vector3 _eachPizzaOffset = new Vector3(0, 0.1f, 0f);
 
+    private int _maxPizzaHold = 2;
+
     public void TakeFromOven(PizzaBehaviour pizza)
     {
         Pizzas.Push(pizza);
@@ -30,5 +32,10 @@ public class  PlayerServePizzaController : MonoBehaviour
             position += _eachPizzaOffset;
         }
         return position;
+    }
+
+    public bool CanHoldMorePizza()
+    {
+        return Pizzas.Count < _maxPizzaHold;
     }
 }

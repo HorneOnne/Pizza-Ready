@@ -11,9 +11,11 @@ public class PizzaOvenBehaviour : MonoBehaviour
     [SerializeField]  private PizzaBehaviour _pizzaPrefab;
     public Stack<PizzaBehaviour> BakedPizzas = new();
 
-
+    private bool _hitPlayer =false;
     private float _bakePizzaTime = 2.0f;
-    private float _bakePizzaTimer = 0.0f;
+    private float _bakePizzaTimer = 0.0f; 
+    private float _takePizzaTime = 0.25f;
+    private float _takePizzaTimer = 0.0f;
 
     private void Update()
     {
@@ -27,10 +29,7 @@ public class PizzaOvenBehaviour : MonoBehaviour
                 BakePizza();
             }
         }
-
-      
     }
-
 
 
     public PizzaBehaviour BakePizza()
@@ -53,16 +52,40 @@ public class PizzaOvenBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            if(other.TryGetComponent<PlayerServePizzaController>(out var player))
+            _hitPlayer = true;
+            _takePizzaTimer = 0.0f;
+        }
+    }
+
+  
+    private void OnTriggerStay(Collider other)
+    {
+        if (_hitPlayer == false) return;
+
+        _takePizzaTimer += Time.deltaTime;
+        if(_takePizzaTimer > _takePizzaTime)
+        {
+            _takePizzaTimer -= _takePizzaTime;
+            if (other.CompareTag("Player"))
             {
-                if(BakedPizzas.Count > 0)
+                if (other.TryGetComponent<PlayerServePizzaController>(out var player))
                 {
-                    player.TakeFromOven(BakedPizzas.Pop());
+                    if (BakedPizzas.Count > 0 && player.CanHoldMorePizza())
+                    {
+                        player.TakeFromOven(BakedPizzas.Pop());
+                    }
                 }
-            
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _hitPlayer = false;
         }
     }
 }
