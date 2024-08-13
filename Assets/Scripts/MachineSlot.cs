@@ -12,7 +12,7 @@ public class MachineSlot : MonoBehaviour
     [SerializeField] private bool _isUnlocking = false;
     private float _waitToUnlockTime = 0.5f;
     [SerializeField] private float _waitToUnlockTimer = 0.0f;
-   
+
 
     // references
     [SerializeField] private TextMeshProUGUI _defaultCostText;
@@ -35,21 +35,21 @@ public class MachineSlot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-     
-        if(other.CompareTag("Player"))
+
+        if (other.CompareTag("Player"))
         {
-            
+
 
             _isUnlocking = true;
             transform.DOScale(1.35f, 0.5f).SetEase(Ease.InFlash);
         }
 
-     
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-  
+
         if (other.CompareTag("Player"))
         {
             transform.DOScale(1.0f, 0.5f).SetEase(Ease.OutBounce);
@@ -57,16 +57,21 @@ public class MachineSlot : MonoBehaviour
             _waitToUnlockTimer = 0;
         }
 
-      
+
     }
 
 
     private void OnTriggerStay(Collider other)
     {
-        if(_isUnlocking)
+        if (other.CompareTag("Player") == false)
+        {
+            return;
+        }
+
+        if (_isUnlocking)
         {
             _waitToUnlockTimer += Time.deltaTime;
-            if(_waitToUnlockTimer < _waitToUnlockTime)
+            if (_waitToUnlockTimer < _waitToUnlockTime)
             {
                 return;
             }
@@ -80,7 +85,7 @@ public class MachineSlot : MonoBehaviour
             }
         }
 
-   
+
         if (Unlock())
         {
             var machinePrefab = Resources.Load($"Machines/{_machineName}");
@@ -106,7 +111,7 @@ public class MachineSlot : MonoBehaviour
             UpdateCostString();
             _percentSliderImage.fillAmount = 1 - (float)Cost / _startingCost;
         }
- 
+
 
         if (Cost == 0)
         {
@@ -137,7 +142,7 @@ public class MachineSlot : MonoBehaviour
         {
             _default.SetActive(true);
             _unlocking.SetActive(false);
-        }    
+        }
     }
 }
 

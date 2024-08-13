@@ -6,9 +6,11 @@ using UnityEngine;
 
 public class QueuingAction : ActionBase<QueuingAction.Data>
 {
+    private TableBehaviour[] _tables;
+    private CounterBehaviour _counter;
     public override void Created()
     {
-       
+      
     }
 
     public override void Start(IMonoAgent agent, Data data)
@@ -16,13 +18,14 @@ public class QueuingAction : ActionBase<QueuingAction.Data>
         Debug.Log("QueuingAction start");
         data.WaitingLane = GameObject.FindObjectOfType<WaitingLane>();
         data.Timer = Random.Range(0.3f, 1f);
+        _tables = GameObject.FindObjectsOfType<TableBehaviour>();
+        _counter = GameObject.FindObjectOfType<CounterBehaviour>();
     }
 
  
 
     public override ActionRunState Perform(IMonoAgent agent, Data data, ActionContext context)
     {
-        Debug.Log("Queue action");
         if (data.WaitingLane == null)
             return ActionRunState.Stop;
 
@@ -39,18 +42,12 @@ public class QueuingAction : ActionBase<QueuingAction.Data>
 
         if (agent.GetComponent<AgentQueuingBehaviour>().IsWaitingInQueue)
         {
-            if (agent.GetComponent<AgentQueuingBehaviour>().QueueIndex == 0)
+            if (agent.GetComponent<AgentQueuingBehaviour>().QueueIndex == 0 && HasSeat() && HasServedPizza())
             {
                 Debug.Log($"{agent.name} Stop");
                 return ActionRunState.Stop;
             }
         }
-
-
-        //data.Timer -= context.DeltaTime;
-        //if (data.Timer > 0)
-        //    return ActionRunState.Continue;
-        //return ActionRunState.Stop;
 
         return ActionRunState.Continue;
     }
@@ -58,7 +55,25 @@ public class QueuingAction : ActionBase<QueuingAction.Data>
 
     public override void End(IMonoAgent agent, Data data)
     {
+       
+    }
 
+    public bool HasSeat()
+    {
+        for(int i = 0; i < _tables.Length; i++)
+        {
+            if (_tables[i].HasSeat())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool HasServedPizza()
+    {
+        return _counter.ServingPizzas.Count > 0;
     }
 
     public class Data : IActionData

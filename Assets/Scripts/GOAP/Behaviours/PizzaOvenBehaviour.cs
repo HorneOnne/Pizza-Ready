@@ -25,7 +25,6 @@ public class PizzaOvenBehaviour : MonoBehaviour
             _bakePizzaTimer -= _bakePizzaTime;
             if (BakedPizzas.Count < _maxStack)
             {
-                Debug.Log("Bake pizza");
                 BakePizza();
             }
         }

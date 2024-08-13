@@ -8,6 +8,9 @@ public class AnimationBehaviour : MonoBehaviour
     private NavMeshAgent _navmeshAgent;
     private AgentBehaviour _agent;
     private static readonly int Velocity = Animator.StringToHash("Velocity");
+    private static readonly int SeatAndEat = Animator.StringToHash("SeatAndEat");
+
+    [field: SerializeField] public bool IsEating { get; set; }
 
     private void Awake()
     {
@@ -22,7 +25,8 @@ public class AnimationBehaviour : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        //_anim.SetFloat(_animIDVelocity, _input.Move.magnitude);
         this._anim.SetFloat(Velocity, _navmeshAgent.velocity.magnitude);
+
+        this._anim.SetBool(SeatAndEat, IsEating);
     }
 }

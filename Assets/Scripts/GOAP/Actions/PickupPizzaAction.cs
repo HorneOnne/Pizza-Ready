@@ -7,9 +7,12 @@ using UnityEngine;
 public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 {
     private WaitingLane _waitingLane;
+    private TableBehaviour[] _tables;
+
     public override void Created()
     {
         _waitingLane = GameObject.FindObjectOfType<WaitingLane>();
+        _tables = GameObject.FindObjectsOfType<TableBehaviour>();   
     }
 
     public override void Start(IMonoAgent agent, Data data)
@@ -20,6 +23,20 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 
     public override ActionRunState Perform(IMonoAgent agent, Data data, ActionContext context)
     {
+        bool hasSeat = false;
+        for(int i = 0; i < _tables.Length; i++)
+        {
+            if (_tables[i].HasSeat())
+            {
+                hasSeat = true;
+                break;
+            }
+        }
+        if(hasSeat == false)
+        {
+            return ActionRunState.Continue;
+        }
+
         if (data.Target is not TransformTarget transformTarget)
             return ActionRunState.Stop;
 
@@ -27,31 +44,10 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
             return ActionRunState.Stop;
 
 
-        //var queue = transformTarget.Transform.GetComponent<AgentQueuingBehaviour>();
-        //if (queue == null)
-        //    return ActionRunState.Stop;
-        //if(queue.QueueIndex != 0)
-        //{
-        //    Debug.Log("Stop");
-        //    return ActionRunState.Stop;
-        //}
-        //else
-        //{
-        //    Debug.Log("Continue");
-        //}
-
-
         var servingCounter = transformTarget.Transform.GetComponentInParent<CounterBehaviour>();
-        //if (!servingCounter.IsServing)
-        //    return ActionRunState.Stop;
         var pizza = servingCounter.ServePizza();
         if (pizza == null)
             return ActionRunState.Stop;
-
-        //var pizza = transformTarget.Transform.GetComponent<PizzaBehaviour>();
-        //if (pizza == null)
-        //    return ActionRunState.Stop;
-
 
         // prevent picking up same pizza
         if (pizza.IsPickUp)
@@ -72,7 +68,7 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 
     public override void End(IMonoAgent agent, Data data)
     {
-
+        
     }
 
 

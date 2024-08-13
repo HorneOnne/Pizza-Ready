@@ -20,17 +20,22 @@ public class EatPizzaAction : ActionBase<EatPizzaAction.Data>
 
         data.Pizza = inventory.Pizza;
         data.Hunger = agent.GetComponent<HungerBehaviour>();
+        agent.GetComponent<AnimationBehaviour>().IsEating = true;
+        //agent.transform.rotation = Quaternion.Euler(0, 260, 0);
+        agent.GetComponent<AgentSeatBehaviour>().Table.UpdateAgentSeatTransform(agent.GetComponent<AgentSeatBehaviour>());
     }
 
 
     public override ActionRunState Perform(IMonoAgent agent, Data data, ActionContext context)
     {
-        Debug.Log("Eat pizza action");
         if (data.Pizza == null || data.Hunger == null)
+        {
+            agent.GetComponent<AnimationBehaviour>().IsEating = false;
             return ActionRunState.Stop;
+        }
+            
 
         var eatNutrition = context.DeltaTime * 30f;
-
         data.Pizza.NutritionValue -= eatNutrition;
         data.Hunger.Hunger -= eatNutrition * 10;
 
@@ -39,17 +44,19 @@ public class EatPizzaAction : ActionBase<EatPizzaAction.Data>
             _pizzaCollection.Remove(data.Pizza);
             GameObject.Destroy(data.Pizza.gameObject);
             //data.Pizza.gameObject.SetActive(false);
+        
             agent.GetComponent<AgentBrain>().ActiveWanderGoal();
         }
 
-
+        Debug.Log("eating");
         return ActionRunState.Continue;
     }
 
 
     public override void End(IMonoAgent agent, Data data)
     {
-
+        agent.GetComponent<AnimationBehaviour>().IsEating = false;
+        agent.GetComponent<AgentSeatBehaviour>().Standup();
     }
 
 

@@ -31,7 +31,6 @@ public class PizzaRefillCounter : MonoBehaviour
                 var playerServePizzaController = other.GetComponent<PlayerServePizzaController>();
                 if (playerServePizzaController != null)
                 {
-                    Debug.Log("Refill");
                     _counter.RefillPizza(playerServePizzaController.Drop());
                 }
             }

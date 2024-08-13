@@ -16,8 +16,8 @@ public class FindTableAction : ActionBase<FindTableAction.Data>
         if (data.Target is not TransformTarget transformTarget)
             return;
 
-        data.Table = transformTarget.Transform.GetComponent<TableBehaviour>();
-        UnityEngine.Debug.Log(data.Table.gameObject.transform.position);
+        data.Table = transformTarget.Transform.GetComponentInParent<TableBehaviour>();
+        //agent.GetComponent<AgentSeatBehaviour>().Sitdown(data.Table);
     }
 
 
@@ -28,10 +28,9 @@ public class FindTableAction : ActionBase<FindTableAction.Data>
 
         if(data.Table.HasSeat())
         {
-            var seat = agent.GetComponent<SeatBehaviour>();
+            var seat = agent.GetComponent<AgentSeatBehaviour>();
             if (seat == null)
                 return ActionRunState.Stop;
-
             seat.Sitdown(data.Table);
             return ActionRunState.Stop;
         }          
