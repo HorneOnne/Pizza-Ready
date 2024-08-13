@@ -40,11 +40,15 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
         //    Debug.Log("Continue");
         //}
 
-      
 
-        var pizza = transformTarget.Transform.GetComponent<PizzaBehaviour>();
+        var servingCounter = transformTarget.Transform.GetComponentInParent<CounterBehaviour>();
+        var pizza = servingCounter.ServePizza();
         if (pizza == null)
             return ActionRunState.Stop;
+
+        //var pizza = transformTarget.Transform.GetComponent<PizzaBehaviour>();
+        //if (pizza == null)
+        //    return ActionRunState.Stop;
 
 
         // prevent picking up same pizza
