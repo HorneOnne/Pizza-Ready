@@ -5,7 +5,7 @@ public class PizzaOvenBehaviour : MonoBehaviour
 {
     private int _maxStack = 3;
 
-
+    [SerializeField ] private Transform _pizzaMakerTransform;
     [SerializeField] private Transform _bakedPizzaOriginTransform;
     private Vector3 _bakedPizzaOffset = new Vector3(0,0.1f,0f);
     [SerializeField]  private PizzaBehaviour _pizzaPrefab;
@@ -33,7 +33,8 @@ public class PizzaOvenBehaviour : MonoBehaviour
 
     public PizzaBehaviour BakePizza()
     {
-        var pizzaInstance = Instantiate(_pizzaPrefab, GetBakedPizzaPosition(BakedPizzas.Count), Quaternion.identity);
+        var pizzaInstance = Instantiate(_pizzaPrefab, _pizzaMakerTransform.position, Quaternion.identity);
+        pizzaInstance.MoveTo(GetBakedPizzaPosition(BakedPizzas.Count));
         BakedPizzas.Push(pizzaInstance);
 
         return pizzaInstance;

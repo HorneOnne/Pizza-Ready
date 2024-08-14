@@ -15,8 +15,12 @@ public class CounterBehaviour : MonoBehaviour
     {
         if (pizza == null) return;
         ServingPizzas.Add(pizza);
-        pizza.transform.SetParent(this.transform);
-        pizza.transform.position = GetServingPizzaPosition();
+        //pizza.transform.SetParent(_seringPizzaOriginTransform);
+        //pizza.transform.position = GetServingPizzaPosition();
+
+        Debug.Log("Refill pizza");
+        pizza.transform.parent = null;
+        pizza.MoveTo(GetServingPizzaPosition());
     }
 
 
@@ -32,6 +36,7 @@ public class CounterBehaviour : MonoBehaviour
     private Vector3 GetServingPizzaPosition()
     {
         var position = _seringPizzaOriginTransform.position;
+        //var position = Vector3.zero;
         for (int i = 0; i < ServingPizzas.Count; i++)
         {
             position += _servingPizzaOffset;

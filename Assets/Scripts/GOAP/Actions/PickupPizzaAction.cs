@@ -23,20 +23,6 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 
     public override ActionRunState Perform(IMonoAgent agent, Data data, ActionContext context)
     {
-        //bool hasSeat = false;
-        //for(int i = 0; i < _tables.Length; i++)
-        //{
-        //    if (_tables[i].HasSeat())
-        //    {
-        //        hasSeat = true;
-        //        break;
-        //    }
-        //}
-        //if(hasSeat == false)
-        //{
-        //    return ActionRunState.Continue;
-        //}
-
         if (data.Target is not TransformTarget transformTarget)
             return ActionRunState.Stop;
 
