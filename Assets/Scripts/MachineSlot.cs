@@ -12,7 +12,7 @@ public class MachineSlot : MonoBehaviour
     [SerializeField] private bool _isUnlocking = false;
     private float _waitToUnlockTime = 0.5f;
     [SerializeField] private float _waitToUnlockTimer = 0.0f;
-
+    public Transform MachineTransform;
 
     // references
     [SerializeField] private TextMeshProUGUI _defaultCostText;
@@ -92,7 +92,7 @@ public class MachineSlot : MonoBehaviour
             if (machinePrefab != null)
             {
                 // create machine
-                Instantiate(machinePrefab, new Vector3(other.transform.position.x, 0, other.transform.position.z + 1.5f), Quaternion.identity);
+                Instantiate(machinePrefab, MachineTransform.position, Quaternion.identity);
                 this.gameObject.SetActive(false);
             }
             else

@@ -21,6 +21,7 @@ public class AgentSeatBehaviour : MonoBehaviour
     {
         Table.StandUp(this);
         this.Table = null;
-   
+        IsSitDown = false;
+
     }
 }

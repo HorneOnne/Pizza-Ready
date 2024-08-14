@@ -54,7 +54,6 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 
     public override void End(IMonoAgent agent, Data data)
     {
-        Debug.Log($"End pickup pizza action: {agent.transform.name}");
         if (agent.GetComponent<AgentSeatBehaviour>().IsSitDown) return;
         for (int i = 0; i < _tableCollection.Tables.Count; i++)
         {
@@ -62,7 +61,6 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
             {
                 agent.GetComponent<AgentSeatBehaviour>().Sitdown(_tableCollection.Tables[i]);
                 return;
-                //_tables[i].SitDown(agent.GetComponent<AgentSeatBehaviour>());
             }
         }
     }

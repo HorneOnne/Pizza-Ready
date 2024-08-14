@@ -80,10 +80,6 @@ public class TableBehaviour : MonoBehaviour
 
     public Transform GetSeat(AgentSeatBehaviour agent)
     {
-        Debug.Log("Get seat");
-        //return ChairsPosition[0].transform;
-
-        
         for (int i = 0; i < _agents.Length; i++)
         {
             if (_agents[i] == agent)

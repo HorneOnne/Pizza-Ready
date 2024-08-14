@@ -14,6 +14,7 @@ public class ClosestQueueSensor : LocalTargetSensorBase
 
     public override ITarget Sense(IMonoAgent agent, IComponentReference references)
     {
+        if (_waitingLane == null) return null;
         return new TransformTarget(_waitingLane.transform);
         //return new PositionTarget(_waitingLane.GetQueuePosition(agent));
         //return new TransformTarget(_waitingLane.GetQueuePosition(agent.GetComponent<AgentQueuingBehaviour>()));

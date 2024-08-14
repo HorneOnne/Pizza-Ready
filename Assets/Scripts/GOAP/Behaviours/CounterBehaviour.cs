@@ -15,10 +15,6 @@ public class CounterBehaviour : MonoBehaviour
     {
         if (pizza == null) return;
         ServingPizzas.Add(pizza);
-        //pizza.transform.SetParent(_seringPizzaOriginTransform);
-        //pizza.transform.position = GetServingPizzaPosition();
-
-        Debug.Log("Refill pizza");
         pizza.transform.parent = null;
         pizza.MoveTo(GetServingPizzaPosition());
     }

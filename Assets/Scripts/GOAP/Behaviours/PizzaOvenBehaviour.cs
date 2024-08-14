@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PizzaOvenBehaviour : MonoBehaviour
 {
@@ -25,18 +26,22 @@ public class PizzaOvenBehaviour : MonoBehaviour
             _bakePizzaTimer -= _bakePizzaTime;
             if (BakedPizzas.Count < _maxStack)
             {
-                BakePizza();
+               var pizza = BakePizza();
+                StartCoroutine(AddPizzaToStackCoroutine(pizza));
             }
         }
     }
 
+    private IEnumerator AddPizzaToStackCoroutine(PizzaBehaviour pizza)
+    {
+        yield return new WaitForSeconds(0.1f);
+        BakedPizzas.Push(pizza);
+    }
 
     public PizzaBehaviour BakePizza()
     {
         var pizzaInstance = Instantiate(_pizzaPrefab, _pizzaMakerTransform.position, Quaternion.identity);
         pizzaInstance.MoveTo(GetBakedPizzaPosition(BakedPizzas.Count));
-        BakedPizzas.Push(pizzaInstance);
-
         return pizzaInstance;
     }
 

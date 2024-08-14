@@ -36,6 +36,11 @@ public class ClosestPizzaSensor : LocalTargetSensorBase
 
     public override ITarget Sense(IMonoAgent agent, IComponentReference references)
     {
+        if(_counterBehaviour == null)
+        {
+            this._counterBehaviour = GameObject.FindObjectOfType<CounterBehaviour>();
+            return null;
+        }
         if(_counterBehaviour.ServingPizzas.Count > 0 && _counterBehaviour.IsServing)
         {
             //return new TransformTarget(_counterBehaviour.ServePizza().transform);

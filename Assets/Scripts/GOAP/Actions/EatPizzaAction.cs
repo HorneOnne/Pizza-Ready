@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EatPizzaAction : ActionBase<EatPizzaAction.Data>
 {
+    public static System.Action OnAgentEatCompleted;
     public override void Created()
     {
 
@@ -33,9 +34,9 @@ public class EatPizzaAction : ActionBase<EatPizzaAction.Data>
         }
             
 
-        var eatNutrition = context.DeltaTime * 30f;
+        var eatNutrition = context.DeltaTime * 10f;
         data.Pizza.NutritionValue -= eatNutrition;
-        data.Hunger.Hunger -= eatNutrition * 10;
+        data.Hunger.Hunger -= eatNutrition * 1;
 
         if (data.Pizza.NutritionValue <= 0)
         {
@@ -45,7 +46,6 @@ public class EatPizzaAction : ActionBase<EatPizzaAction.Data>
             agent.GetComponent<AgentBrain>().ActiveWanderGoal();
         }
 
-        Debug.Log("eating");
         return ActionRunState.Continue;
     }
 
@@ -54,6 +54,9 @@ public class EatPizzaAction : ActionBase<EatPizzaAction.Data>
     {
         agent.GetComponent<AnimationBehaviour>().IsEating = false;
         agent.GetComponent<AgentSeatBehaviour>().Standup();
+        agent.GetComponent<AgentSeatBehaviour>().Table = null;
+
+        OnAgentEatCompleted?.Invoke();
     }
 
 

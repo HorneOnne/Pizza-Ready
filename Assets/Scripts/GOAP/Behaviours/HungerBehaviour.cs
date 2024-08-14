@@ -10,6 +10,6 @@ public class HungerBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Hunger += Time.fixedDeltaTime * 10f;
+        Hunger += Time.fixedDeltaTime * 1;
     }
 }

@@ -13,7 +13,6 @@ public class  PlayerServePizzaController : MonoBehaviour
     {
         Pizzas.Push(pizza);
         pizza.transform.SetParent(HoldPizzaTransform);
-        //pizza.transform.localPosition = GetPizzaPosition();
         pizza.MoveToLocal(GetPizzaPosition());
     }
 

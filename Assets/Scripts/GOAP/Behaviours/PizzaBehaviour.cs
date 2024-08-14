@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class PizzaBehaviour : MonoBehaviour
 {
     public bool IsPickUp { get; private set; }
@@ -15,7 +14,7 @@ public class PizzaBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        NutritionValue = 100;
+        NutritionValue = 70;
     }
 
     private void OnEnable()
@@ -44,13 +43,13 @@ public class PizzaBehaviour : MonoBehaviour
         StartCoroutine(MoveToLocalAnimationCoroutine(localTargetPosition));
     }
 
-    public void MoveTo(Vector3 targetPosition)
+    public void MoveTo(Vector3 targetPosition, System.Action onFinished = null)
     {
         _startMovePosition = transform.position;
-        StartCoroutine(MoveAnimationCoroutine(targetPosition));
+        StartCoroutine(MoveAnimationCoroutine(targetPosition, onFinished));
     }
 
-    private IEnumerator MoveAnimationCoroutine(Vector3 target)
+    private IEnumerator MoveAnimationCoroutine(Vector3 target, System.Action onFinished)
     {
         _timeElapsed = 0.0f;
         while (_timeElapsed < _animMoveDuration)
@@ -64,6 +63,8 @@ public class PizzaBehaviour : MonoBehaviour
             yield return null;
         }
         transform.position = target;
+
+        onFinished?.Invoke();
     }
 
 

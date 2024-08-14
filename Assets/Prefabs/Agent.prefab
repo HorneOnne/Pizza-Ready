@@ -1016,7 +1016,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
@@ -1043,7 +1043,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!114 &7137611576556687339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1135,7 +1135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Table: {fileID: 0}
-  SeatPosition: {x: 0, y: 0, z: 0}
+  IsSitDown: 0
+  HasSeat: 0
 --- !u!114 &5938205130157757661
 MonoBehaviour:
   m_ObjectHideFlags: 0
