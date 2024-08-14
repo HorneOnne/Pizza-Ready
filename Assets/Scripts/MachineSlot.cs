@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class MachineSlot : MonoBehaviour
 {
+    public static System.Action OnMachineUnlocked;
     [field: SerializeField] public int Cost { get; set; }
     private int _startingCost;
     [SerializeField] private bool _isUnlocking = false;
@@ -94,6 +95,7 @@ public class MachineSlot : MonoBehaviour
                 // create machine
                 Instantiate(machinePrefab, MachineTransform.position, Quaternion.identity);
                 this.gameObject.SetActive(false);
+                OnMachineUnlocked?.Invoke();
             }
             else
             {
