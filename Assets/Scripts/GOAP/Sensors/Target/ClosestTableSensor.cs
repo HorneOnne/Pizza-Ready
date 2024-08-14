@@ -5,21 +5,21 @@ using UnityEngine;
 
 public class ClosestTableSensor : LocalTargetSensorBase
 {
-    private TableBehaviour[] _tables;
+    private TableCollection _tableCollection;
 
     public override void Created()
     {
-        this._tables = GameObject.FindObjectsOfType<TableBehaviour>();
+        this._tableCollection = GameObject.FindObjectOfType<TableCollection>();
     }
 
     public override ITarget Sense(IMonoAgent agent, IComponentReference references)
     {
-        if (_tables.Length == 0) return null;
-        for (int i = 0; i < _tables.Length; i++)
+        if (_tableCollection.Tables.Count == 0) return null;
+        for (int i = 0; i < _tableCollection.Tables.Count ; i++)
         {
-            if (_tables[i].HasSeat(agent.GetComponent<AgentSeatBehaviour>()))
+            if (_tableCollection.Tables[i].HasSeat(agent.GetComponent<AgentSeatBehaviour>()))
             {
-                return new TransformTarget(_tables[i].GetSeat(agent.GetComponent<AgentSeatBehaviour>()));                    
+                return new TransformTarget(_tableCollection.Tables[i].GetSeat(agent.GetComponent<AgentSeatBehaviour>()));                    
             }
         }
 

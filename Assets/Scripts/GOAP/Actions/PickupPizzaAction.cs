@@ -7,12 +7,12 @@ using UnityEngine;
 public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 {
     private WaitingLane _waitingLane;
-    private TableBehaviour[] _tables;
+    private TableCollection _tableCollection;
 
     public override void Created()
     {
         _waitingLane = GameObject.FindObjectOfType<WaitingLane>();
-        _tables = GameObject.FindObjectsOfType<TableBehaviour>();   
+        _tableCollection = GameObject.FindObjectOfType<TableCollection>();  
     }
 
     public override void Start(IMonoAgent agent, Data data)
@@ -56,11 +56,11 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
     {
         Debug.Log($"End pickup pizza action: {agent.transform.name}");
         if (agent.GetComponent<AgentSeatBehaviour>().IsSitDown) return;
-        for (int i = 0; i < _tables.Length; i++)
+        for (int i = 0; i < _tableCollection.Tables.Count; i++)
         {
-            if (_tables[i].HasSeat(agent.GetComponent<AgentSeatBehaviour>()))
+            if (_tableCollection.Tables[i].HasSeat(agent.GetComponent<AgentSeatBehaviour>()))
             {
-                agent.GetComponent<AgentSeatBehaviour>().Sitdown(_tables[i]);
+                agent.GetComponent<AgentSeatBehaviour>().Sitdown(_tableCollection.Tables[i]);
                 return;
                 //_tables[i].SitDown(agent.GetComponent<AgentSeatBehaviour>());
             }

@@ -4,12 +4,14 @@ using DG.Tweening;
 
 public class TableBehaviour : MonoBehaviour
 {
+    private TableCollection _tableCollection;
     [SerializeField] private AgentSeatBehaviour[] _agents;
     public int EmptySeatCount = 2;
     public List<Transform> ChairsPosition;
 
     private void Awake()
     {
+        _tableCollection = GameObject.FindObjectOfType<TableCollection>();
         transform.localScale = Vector3.zero;
         transform.DOScale(1.0f, 0.35f).SetEase(Ease.InOutSine);
 
@@ -21,8 +23,20 @@ public class TableBehaviour : MonoBehaviour
         {
             _agents[i] = null;
         }
+
+
     }
 
+
+    private void OnEnable()
+    {
+        _tableCollection.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        _tableCollection.Remove(this);
+    }
 
 
     public bool HasSeat(AgentSeatBehaviour agent)

@@ -69,8 +69,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869e31dc8799b3c4294709f35b017b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sittingPositions: []
+  _agents: []
   EmptySeatCount: 2
+  ChairsPosition:
+  - {fileID: 7364631874680508194}
+  - {fileID: 3783812677022634016}
 --- !u!1 &6827740236887624786
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 6936318836217274205}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0.112, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -160,7 +163,7 @@ Transform:
   m_GameObject: {fileID: 8265746508891637786}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 0.112, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -194,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 8660567027435554239}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: -0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -277,7 +280,7 @@ Transform:
   m_GameObject: {fileID: 8905067347296323938}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: -0.122, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class QueuingAction : ActionBase<QueuingAction.Data>
 {
-    private TableBehaviour[] _tables;
+    private TableCollection _tableCollection;
     private CounterBehaviour _counter;
     public override void Created()
     {
@@ -18,7 +18,7 @@ public class QueuingAction : ActionBase<QueuingAction.Data>
         Debug.Log("QueuingAction start");
         data.WaitingLane = GameObject.FindObjectOfType<WaitingLane>();
         data.Timer = Random.Range(0.3f, 1f);
-        _tables = GameObject.FindObjectsOfType<TableBehaviour>();
+        _tableCollection = GameObject.FindObjectOfType<TableCollection>();
         _counter = GameObject.FindObjectOfType<CounterBehaviour>();
     }
 
@@ -53,9 +53,9 @@ public class QueuingAction : ActionBase<QueuingAction.Data>
             if (agent.GetComponent<AgentQueuingBehaviour>().QueueIndex == 0 && HasServedPizza())
             {
                 bool hasSeat = false;
-                for (int i = 0; i < _tables.Length; i++)
+                for (int i = 0; i < _tableCollection.Tables.Count; i++)
                 {
-                    if (_tables[i].HasSeat(agent.GetComponent<AgentSeatBehaviour>()))
+                    if (_tableCollection.Tables[i].HasSeat(agent.GetComponent<AgentSeatBehaviour>()))
                     {
                         hasSeat = true;
                         break;
@@ -82,9 +82,9 @@ public class QueuingAction : ActionBase<QueuingAction.Data>
 
     public bool HasSeat(AgentSeatBehaviour agent)
     {
-        for(int i = 0; i < _tables.Length; i++)
+        for(int i = 0; i < _tableCollection.Tables.Count; i++)
         {
-            if (_tables[i].HasSeat(agent))
+            if (_tableCollection.Tables[i].HasSeat(agent))
             {
                 return true;
             }

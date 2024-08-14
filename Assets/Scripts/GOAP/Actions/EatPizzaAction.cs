@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class EatPizzaAction : ActionBase<EatPizzaAction.Data>
 {
-    private PizzaCollection _pizzaCollection;
     public override void Created()
     {
 
@@ -14,7 +13,6 @@ public class EatPizzaAction : ActionBase<EatPizzaAction.Data>
 
     public override void Start(IMonoAgent agent, Data data)
     {
-        _pizzaCollection = GameObject.FindObjectOfType<PizzaCollection>();
         var inventory = agent.GetComponent<InventoryBehaviour>();
         if (inventory == null) return;
 
@@ -41,7 +39,6 @@ public class EatPizzaAction : ActionBase<EatPizzaAction.Data>
 
         if (data.Pizza.NutritionValue <= 0)
         {
-            _pizzaCollection.Remove(data.Pizza);
             GameObject.Destroy(data.Pizza.gameObject);
             //data.Pizza.gameObject.SetActive(false);
         
