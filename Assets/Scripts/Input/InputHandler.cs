@@ -9,12 +9,14 @@ public class InputHandler : MonoBehaviour
     public event System.Action OnToggleInventory;
 
     private PlayerInput _playerInput;
+    private FixedJoystick _joyStick;
 
     [Header("Character Input Values")]
     public Vector2 Move;
 
     private void Awake()
     {
+        _joyStick = FindObjectOfType<FixedJoystick>();
         Instance = this;
         _playerInput = new PlayerInput();
       
@@ -47,6 +49,11 @@ public class InputHandler : MonoBehaviour
     private void Start()
     {
         ActivePlayerMap();
+    }
+
+    private void Update()
+    {
+        Move = _joyStick.Direction;
     }
 
     public void ActivePlayerMap()
