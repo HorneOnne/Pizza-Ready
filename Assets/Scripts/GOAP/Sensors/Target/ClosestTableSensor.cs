@@ -17,9 +17,9 @@ public class ClosestTableSensor : LocalTargetSensorBase
         if (_tables.Length == 0) return null;
         for (int i = 0; i < _tables.Length; i++)
         {
-            if (_tables[i].HasSeat())
+            if (_tables[i].HasSeat(agent.GetComponent<AgentSeatBehaviour>()))
             {
-                return new TransformTarget(_tables[i].GetSeat());                    
+                return new TransformTarget(_tables[i].GetSeat(agent.GetComponent<AgentSeatBehaviour>()));                    
             }
         }
 
@@ -31,4 +31,3 @@ public class ClosestTableSensor : LocalTargetSensorBase
 
     }
 }
-

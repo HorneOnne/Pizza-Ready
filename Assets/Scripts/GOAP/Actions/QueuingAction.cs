@@ -40,14 +40,36 @@ public class QueuingAction : ActionBase<QueuingAction.Data>
             //return ActionRunState.Stop;
         }
 
+        //if (agent.GetComponent<AgentQueuingBehaviour>().IsWaitingInQueue)
+        //{
+        //    if (agent.GetComponent<AgentQueuingBehaviour>().QueueIndex == 0 && HasSeat() && HasServedPizza())
+        //    {              
+        //        Debug.Log($"{agent.name} Stop");
+        //        return ActionRunState.Stop;
+        //    }
+        //}
         if (agent.GetComponent<AgentQueuingBehaviour>().IsWaitingInQueue)
         {
-            if (agent.GetComponent<AgentQueuingBehaviour>().QueueIndex == 0 && HasSeat() && HasServedPizza())
+            if (agent.GetComponent<AgentQueuingBehaviour>().QueueIndex == 0 && HasServedPizza())
             {
+                bool hasSeat = false;
+                for (int i = 0; i < _tables.Length; i++)
+                {
+                    if (_tables[i].HasSeat(agent.GetComponent<AgentSeatBehaviour>()))
+                    {
+                        hasSeat = true;
+                        break;
+                    }
+                }
+                if (hasSeat == false)
+                {
+                    return ActionRunState.Continue;
+                }
                 Debug.Log($"{agent.name} Stop");
                 return ActionRunState.Stop;
             }
         }
+
 
         return ActionRunState.Continue;
     }
@@ -58,11 +80,11 @@ public class QueuingAction : ActionBase<QueuingAction.Data>
        
     }
 
-    public bool HasSeat()
+    public bool HasSeat(AgentSeatBehaviour agent)
     {
         for(int i = 0; i < _tables.Length; i++)
         {
-            if (_tables[i].HasSeat())
+            if (_tables[i].HasSeat(agent))
             {
                 return true;
             }

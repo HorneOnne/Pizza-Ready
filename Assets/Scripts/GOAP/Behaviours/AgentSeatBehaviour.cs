@@ -3,13 +3,18 @@
 public class AgentSeatBehaviour : MonoBehaviour
 {
     public TableBehaviour Table;
-    public Vector3 SeatPosition;
+    public bool IsSitDown = false;
     public bool HasSeat = false;
 
     public void Sitdown(TableBehaviour table)
     {
+        IsSitDown = true;
+        table.SitDown(this);       
+    }
+
+    public void SetTargetTable(TableBehaviour table)
+    {
         this.Table = table;
-        Table.SitDown(this);       
     }
 
     public void Standup()

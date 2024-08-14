@@ -23,19 +23,19 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 
     public override ActionRunState Perform(IMonoAgent agent, Data data, ActionContext context)
     {
-        bool hasSeat = false;
-        for(int i = 0; i < _tables.Length; i++)
-        {
-            if (_tables[i].HasSeat())
-            {
-                hasSeat = true;
-                break;
-            }
-        }
-        if(hasSeat == false)
-        {
-            return ActionRunState.Continue;
-        }
+        //bool hasSeat = false;
+        //for(int i = 0; i < _tables.Length; i++)
+        //{
+        //    if (_tables[i].HasSeat())
+        //    {
+        //        hasSeat = true;
+        //        break;
+        //    }
+        //}
+        //if(hasSeat == false)
+        //{
+        //    return ActionRunState.Continue;
+        //}
 
         if (data.Target is not TransformTarget transformTarget)
             return ActionRunState.Stop;
@@ -68,7 +68,17 @@ public class PickupPizzaAction : ActionBase<PickupPizzaAction.Data>
 
     public override void End(IMonoAgent agent, Data data)
     {
-        
+        Debug.Log($"End pickup pizza action: {agent.transform.name}");
+        if (agent.GetComponent<AgentSeatBehaviour>().IsSitDown) return;
+        for (int i = 0; i < _tables.Length; i++)
+        {
+            if (_tables[i].HasSeat(agent.GetComponent<AgentSeatBehaviour>()))
+            {
+                agent.GetComponent<AgentSeatBehaviour>().Sitdown(_tables[i]);
+                return;
+                //_tables[i].SitDown(agent.GetComponent<AgentSeatBehaviour>());
+            }
+        }
     }
 
 

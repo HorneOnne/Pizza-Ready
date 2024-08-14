@@ -26,16 +26,23 @@ public class FindTableAction : ActionBase<FindTableAction.Data>
         if (data.Table == null)
             return ActionRunState.Stop;
 
-        if(data.Table.HasSeat())
-        {
-            var seat = agent.GetComponent<AgentSeatBehaviour>();
-            if (seat == null)
-                return ActionRunState.Stop;
-            seat.Sitdown(data.Table);
+        var seat = agent.GetComponent<AgentSeatBehaviour>();
+        if (seat == null)
             return ActionRunState.Stop;
-        }          
-        else
-            return ActionRunState.Continue;
+        seat.SetTargetTable(data.Table);
+        return ActionRunState.Stop;
+
+
+        //if(data.Table.HasSeat())
+        //{
+        //    var seat = agent.GetComponent<AgentSeatBehaviour>();
+        //    if (seat == null)
+        //        return ActionRunState.Stop;
+        //    seat.SetTargetTable(data.Table);
+        //    return ActionRunState.Stop;
+        //}          
+        //else
+        //    return ActionRunState.Continue;
     }
 
 

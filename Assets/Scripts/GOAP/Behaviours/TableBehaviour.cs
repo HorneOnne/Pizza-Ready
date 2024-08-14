@@ -5,7 +5,6 @@ using DG.Tweening;
 public class TableBehaviour : MonoBehaviour
 {
     [SerializeField] private AgentSeatBehaviour[] _agents;
-    [SerializeField] private AgentSeatBehaviour[] _bookedSeatAgents;
     public int EmptySeatCount = 2;
     public List<Transform> ChairsPosition;
 
@@ -18,7 +17,6 @@ public class TableBehaviour : MonoBehaviour
         // initial null agents
         EmptySeatCount = ChairsPosition.Count;
         _agents = new AgentSeatBehaviour[EmptySeatCount];
-        _bookedSeatAgents = new AgentSeatBehaviour[EmptySeatCount];
         for (int i = 0; i < _agents.Length; i++)
         {
             _agents[i] = null;
@@ -27,21 +25,22 @@ public class TableBehaviour : MonoBehaviour
 
 
 
-
-    public bool HasSeat()
+    public bool HasSeat(AgentSeatBehaviour agent)
     {
-        for(int i = 0; i < _agents.Length; i++)
+        for (int i = 0; i < _agents.Length; i++)
         {
-            if (_agents[i] == null)
+            if (_agents[i] == agent)
                 return true;
         }
-        return false;
+        return EmptySeatCount > 0;
     }
 
 
     public void SitDown(AgentSeatBehaviour agent)
     {
-        for(int i = 0; i < _agents.Length; i++)
+        EmptySeatCount--;
+
+        for (int i = 0; i < _agents.Length; i++)
         {
             if (_agents[i] == null)
             {
@@ -53,6 +52,7 @@ public class TableBehaviour : MonoBehaviour
 
     public void StandUp(AgentSeatBehaviour agent)
     {
+        EmptySeatCount++;
         for (int i = 0; i < _agents.Length; i++)
         {
             if (_agents[i] == agent)
@@ -61,15 +61,18 @@ public class TableBehaviour : MonoBehaviour
                 return;
             }
         }
-      
+
     }
 
-    public Transform GetSeat()
+    public Transform GetSeat(AgentSeatBehaviour agent)
     {
         Debug.Log("Get seat");
+        //return ChairsPosition[0].transform;
+
+        
         for (int i = 0; i < _agents.Length; i++)
         {
-            if (_agents[i] == null)
+            if (_agents[i] == agent)
             {               
                 return ChairsPosition[i].transform;
             }
