@@ -34,7 +34,7 @@ public class PizzaOvenBehaviour : MonoBehaviour
 
     private IEnumerator AddPizzaToStackCoroutine(PizzaBehaviour pizza)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.21f);
         BakedPizzas.Push(pizza);
     }
 
