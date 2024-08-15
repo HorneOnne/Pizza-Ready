@@ -17,6 +17,7 @@ public class CounterBehaviour : MonoBehaviour
         ServingPizzas.Add(pizza);
         pizza.transform.parent = null;
         pizza.MoveTo(GetServingPizzaPosition());
+        AudioManager.Instance.PlaySfx(transform.position);
     }
 
 

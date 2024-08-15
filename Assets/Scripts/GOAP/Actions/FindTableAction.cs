@@ -16,6 +16,8 @@ public class FindTableAction : ActionBase<FindTableAction.Data>
         if (data.Target is not TransformTarget transformTarget)
             return;
 
+        if (transformTarget.Transform == null) return;
+
         data.Table = transformTarget.Transform.GetComponentInParent<TableBehaviour>();
         //agent.GetComponent<AgentSeatBehaviour>().Sitdown(data.Table);
     }

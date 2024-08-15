@@ -108,6 +108,7 @@ public class MachineSlot : MonoBehaviour
     {
         if (CurrencyManager.Instance.Money > 0)
         {
+            AudioManager.Instance.PlaySfx(transform.position);
             CurrencyManager.Instance.Withdraw(1);
             Cost--;
             UpdateCostString();

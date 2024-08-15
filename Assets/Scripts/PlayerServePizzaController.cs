@@ -14,6 +14,8 @@ public class  PlayerServePizzaController : MonoBehaviour
         Pizzas.Push(pizza);
         pizza.transform.SetParent(HoldPizzaTransform);
         pizza.MoveToLocal(GetPizzaPosition());
+
+        AudioManager.Instance.PlaySfx(transform.position);
     }
 
 

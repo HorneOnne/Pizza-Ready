@@ -71,6 +71,7 @@ public class MoneyCollector : MonoBehaviour
             {
                 //Moneys[i].Hide();
                 CurrencyManager.Instance.Deposite(10);
+                AudioManager.Instance.PlaySfx(transform.position);
             });    
             yield return null;
         }
